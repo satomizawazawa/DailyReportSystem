@@ -18,12 +18,13 @@
             <td th:text="${employee.authentication.code}"></td>
             <td th:text="${employee.name}"></td>
 
-
             <td>
              <a th:href="@{/employee/detail/{id}/(id=${employee.id})}">詳細を見る</a>
             </td>
         </tr>
     </table>
+
+    <a th:text="'全 '+${employeelist.size()}+' 件'"></a><br>
         <a th:href="@{/employee/register}">新規従業員の登録</a>
 </body>
 </html>
