@@ -23,8 +23,9 @@
     <input type="text" th:field="*{name}">
     <br>
 
-    <label for="password">パスワード</label><br>
-    <input type="text" th:field="*{authentication.password}">
+    <label for="newpassword">パスワード</label><br>
+    <input type="text" name="newpassword">
+    <input type="hidden" name="currentpassword" th:value="*{authentication.password}">
     <br>
 
     <label for="role">権限</label><br>
@@ -35,8 +36,9 @@
     <br>
     <br>
     <input type="submit" value="投稿"><br>
-
     </form>
+    <a th:href="@{/employee/delete/{id}/(id=${employee.id})}">この従業員を削除する</a><br>
+    <a th:href="@{/employee/list}">一覧に戻る</a>
 
 </body>
 </html>
