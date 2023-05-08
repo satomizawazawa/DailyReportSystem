@@ -17,7 +17,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="employee")
+@Table(name = "employee")
 @Where(clause = "delete_flag = 0")
 public class Employee {
 
@@ -42,7 +42,7 @@ public class Employee {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToOne(mappedBy="employee", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
     private Authentication authentication;
 
 }

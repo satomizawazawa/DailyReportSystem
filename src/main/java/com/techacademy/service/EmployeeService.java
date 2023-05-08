@@ -20,20 +20,19 @@ public class EmployeeService {
         this.authenticationRepository = authenticationRepository;
     }
 
-
     /** 全件を検索して返す */
-    public List<Employee> getEmployeeList(){
+    public List<Employee> getEmployeeList() {
         // リポジトリのfindAllメソッドを呼び出す
         return employeeRepository.findAll();
     }
 
-    /** 1件検索して返す*/
-    public Employee getEmployee(Integer id){
+    /** 1件検索して返す */
+    public Employee getEmployee(Integer id) {
         // リポジトリのfindAllメソッドを呼び出す
         return employeeRepository.findById(id).get();
     }
 
-    /** Employeeの登録を行う*/
+    /** Employeeの登録を行う */
     public Employee saveEmployee(Employee employee) {
         Authentication auth = employee.getAuthentication();
         auth.setEmployee(employee);

@@ -34,19 +34,19 @@ public class EmployeeController {
         return "employee/list";
     }
 
-    /**詳細画面を表示*/
+    /** 詳細画面を表示 */
     @GetMapping("/detail/{id}/")
     public String getEmployee(@PathVariable("id") Integer id, Model model) {
-        //Modelに登録
+        // Modelに登録
         model.addAttribute("employee", service.getEmployee(id));
-        //Employee詳細画面に遷移
+        // Employee詳細画面に遷移
         return "employee/detail";
     }
 
-    /**従業員登録画面を表示*/
+    /** 従業員登録画面を表示 */
     @GetMapping("/register")
     public String getRegster(@ModelAttribute Employee employee) {
-        //従業員登録画面へ遷移
+        // 従業員登録画面へ遷移
         return "employee/register";
     }
 
@@ -57,35 +57,34 @@ public class EmployeeController {
         employee.setCreatedAt(LocalDateTime.now());
         employee.setUpdatedAt(LocalDateTime.now());
         employee.setDeleteFlag(0);
-        //認証情報をセット、保存
+        // 認証情報をセット、保存
         Authentication authentication = employee.getAuthentication();
         authentication = service.saveAuthentication(authentication);
         employee.setAuthentication(authentication);
-        //employeeを保存
+        // employeeを保存
         service.saveEmployee(employee);
 
         // 一覧画面にリダイレクト
         return "redirect:/employee/list";
     }
 
-
-    /**従業員更新画面を表示*/
+    /** 従業員更新画面を表示 */
     @GetMapping("/update/{id}/")
     public String updateEmployee(@PathVariable("id") Integer id, Model model) {
-        //Modelに登録
+        // Modelに登録
         model.addAttribute("employee", service.getEmployee(id));
-        //従業員更新画面に遷移
+        // 従業員更新画面に遷移
         return "employee/update";
     }
 
-    /**従業員情報更新処理*/
+    /** 従業員情報更新処理 */
     @PostMapping("/update/{id}/")
     public String postEmployee(@PathVariable("id") Integer id, Employee employee) {
-        //削除フラグをDBから引用
+        // 削除フラグをDBから引用
         Employee dbEmployee = service.getEmployee(id);
         employee.setDeleteFlag(dbEmployee.getDeleteFlag());
         employee.setUpdatedAt(LocalDateTime.now());
-        //認証情報セット、保存
+        // 認証情報セット、保存
         Authentication authentication = employee.getAuthentication();
         authentication = service.saveAuthentication(authentication);
         employee.setAuthentication(authentication);
@@ -94,4 +93,4 @@ public class EmployeeController {
         // 一覧画面にリダイレクト
         return "redirect:/employee/list";
     }
-    }
+}
