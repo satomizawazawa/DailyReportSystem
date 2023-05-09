@@ -70,6 +70,8 @@ public class EmployeeController {
         // 認証情報をセット、保存
         authentication = service.saveAuthentication(authentication);
         employee.setAuthentication(authentication);
+        String password=employee.getAuthentication().getPassword();
+        authentication.setPassword(passwordEncoder.encode(password));
         // employeeを保存
         service.saveEmployee(employee);
         // 一覧画面にリダイレクト
