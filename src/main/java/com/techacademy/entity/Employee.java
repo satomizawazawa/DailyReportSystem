@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull; // 追加
+
+import org.hibernate.validator.constraints.Length; // 追加
 
 import org.hibernate.annotations.Where;
 
@@ -28,6 +31,8 @@ public class Employee {
 
     /** 名前。20桁。null不許可 */
     @Column(length = 20, nullable = false)
+    @NotNull
+    @Length(max=20)
     private String name;
 
     /** 削除フラグ。null不許可 */

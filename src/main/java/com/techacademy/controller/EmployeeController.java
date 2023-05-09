@@ -26,12 +26,12 @@ public class EmployeeController {
     }
 
     /** 一覧画面を表示 */
-    @GetMapping("/list")
+    @GetMapping("/")
     public String getList(Model model) {
         // 全件検索結果をModelに登録
         model.addAttribute("employeelist", service.getEmployeeList());
         // employee/list.htmlに画面遷移
-        return "employee/list";
+        return "index";
     }
 
     /** 詳細画面を表示 */
@@ -45,7 +45,7 @@ public class EmployeeController {
 
     /** 従業員登録画面を表示 */
     @GetMapping("/register")
-    public String getRegster(@ModelAttribute Employee employee) {
+    public String getRegister(@ModelAttribute Employee employee) {
         // 従業員登録画面へ遷移
         return "employee/register";
     }
@@ -53,19 +53,22 @@ public class EmployeeController {
     /** Employee登録処理 */
     @PostMapping("/register")
     public String postRegister(@Validated Employee employee, BindingResult res, Model model) {
+        //if(res.hasErrors()) {
+        //    return getRegister(employee);
+        //}
         // 登録画面にない項目をセット
         employee.setCreatedAt(LocalDateTime.now());
         employee.setUpdatedAt(LocalDateTime.now());
         employee.setDeleteFlag(0);
-        // 認証情報をセット、保存
         Authentication authentication = employee.getAuthentication();
+
+        // 認証情報をセット、保存
         authentication = service.saveAuthentication(authentication);
         employee.setAuthentication(authentication);
         // employeeを保存
         service.saveEmployee(employee);
-
         // 一覧画面にリダイレクト
-        return "redirect:/employee/list";
+        return "redirect:/employee/";
     }
 
     /** 従業員更新画面を表示 */
@@ -79,7 +82,18 @@ public class EmployeeController {
 
     /** 従業員情報更新処理 */
     @PostMapping("/update/{id}/")
-    public String postEmployee(@PathVariable("id") Integer id, Employee employee) {
+    //public String postEmployee(@PathVariable("id") Integer id, @RequestParam("newpassword")String newpassword,Employee employee,Model model) {
+    public String postEmployee(@PathVariable("id") Integer id,Employee employee) {
+
+        //if(newpassword!="") {
+        //    employee.getAuthentication().setPassword(newpassword);
+        //}
+
+        if(employee.getAuthentication().getPassword().equals("")) {
+            String password=employee.getAuthentication().getPassword();
+            employee.getAuthentication().setPassword(password);
+        }
+
         // 削除フラグをDBから引用
         Employee dbEmployee = service.getEmployee(id);
         employee.setDeleteFlag(dbEmployee.getDeleteFlag());
@@ -91,6 +105,6 @@ public class EmployeeController {
         // 従業員の更新
         service.saveEmployee(employee);
         // 一覧画面にリダイレクト
-        return "redirect:/employee/list";
+        return "redirect:/employee/";
     }
 }
