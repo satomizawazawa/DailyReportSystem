@@ -2,6 +2,8 @@ package com.techacademy.controller;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,9 @@ import com.techacademy.service.EmployeeService;
 @RequestMapping("employee")
 public class EmployeeController {
     private final EmployeeService service;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public EmployeeController(EmployeeService service) {
         this.service = service;
@@ -53,15 +58,15 @@ public class EmployeeController {
     /** Employee登録処理 */
     @PostMapping("/register")
     public String postRegister(@Validated Employee employee, BindingResult res, Model model) {
-        //if(res.hasErrors()) {
-        //    return getRegister(employee);
-        //}
+        //エラーチェック
+        if(res.hasErrors()) {
+            return getRegister(employee);
+        }
         // 登録画面にない項目をセット
         employee.setCreatedAt(LocalDateTime.now());
         employee.setUpdatedAt(LocalDateTime.now());
         employee.setDeleteFlag(0);
         Authentication authentication = employee.getAuthentication();
-
         // 認証情報をセット、保存
         authentication = service.saveAuthentication(authentication);
         employee.setAuthentication(authentication);
@@ -82,18 +87,12 @@ public class EmployeeController {
 
     /** 従業員情報更新処理 */
     @PostMapping("/update/{id}/")
-    //public String postEmployee(@PathVariable("id") Integer id, @RequestParam("newpassword")String newpassword,Employee employee,Model model) {
     public String postEmployee(@PathVariable("id") Integer id,Employee employee) {
-
-        //if(newpassword!="") {
-        //    employee.getAuthentication().setPassword(newpassword);
-        //}
-
+        //PWが空欄かチェック
         if(employee.getAuthentication().getPassword().equals("")) {
             String password=employee.getAuthentication().getPassword();
-            employee.getAuthentication().setPassword(password);
+            employee.getAuthentication().setPassword(passwordEncoder.encode(password));
         }
-
         // 削除フラグをDBから引用
         Employee dbEmployee = service.getEmployee(id);
         employee.setDeleteFlag(dbEmployee.getDeleteFlag());
