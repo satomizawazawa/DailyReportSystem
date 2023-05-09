@@ -106,4 +106,15 @@ public class EmployeeController {
         // 一覧画面にリダイレクト
         return "redirect:/employee/";
     }
+
+    /**従業員削除処理*/
+    @GetMapping("/delete/{id}/")
+    public String deleteEmployee(@PathVariable("id") Integer id) {
+        Employee employee = service.getEmployee(id);
+        employee.setDeleteFlag(1);
+        //従業員の更新
+        service.saveEmployee(employee);
+        // 一覧画面にリダイレクト
+        return "redirect:/employee/";
+    }
 }
