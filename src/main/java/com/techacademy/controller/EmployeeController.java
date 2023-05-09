@@ -31,12 +31,12 @@ public class EmployeeController {
     }
 
     /** 一覧画面を表示 */
-    @GetMapping("/")
+    @GetMapping("/list")
     public String getList(Model model) {
         // 全件検索結果をModelに登録
         model.addAttribute("employeelist", service.getEmployeeList());
         // employee/list.htmlに画面遷移
-        return "index";
+        return "employee/list";
     }
 
     /** 詳細画面を表示 */
@@ -73,7 +73,7 @@ public class EmployeeController {
         // employeeを保存
         service.saveEmployee(employee);
         // 一覧画面にリダイレクト
-        return "redirect:/employee/";
+        return "redirect:/employee/list";
     }
 
     /** 従業員更新画面を表示 */
@@ -104,7 +104,7 @@ public class EmployeeController {
         // 従業員の更新
         service.saveEmployee(employee);
         // 一覧画面にリダイレクト
-        return "redirect:/employee/";
+        return "redirect:/employee/list";
     }
 
     /**従業員削除処理*/
@@ -115,6 +115,6 @@ public class EmployeeController {
         //従業員の更新
         service.saveEmployee(employee);
         // 一覧画面にリダイレクト
-        return "redirect:/employee/";
+        return "redirect:/emploee/list";
     }
 }
