@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.techacademy.entity.Employee;
 import com.techacademy.entity.Report;
 import com.techacademy.repository.ReportRepository;
 
@@ -24,7 +25,11 @@ public class ReportService {
     }
     /** 日報の登録を行なう */
     @Transactional
-    public Report saveReport(Report report) {
+    public Report saveReport(Report report,UserDetail userDetail) {
+        report.setEmployee(userDetail.getEmployee());
+        Employee employee = report.getEmployee();
+        employee.setReports(getReportList());
         return reportRepository.save(report);
     }
+
 }

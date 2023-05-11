@@ -16,9 +16,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         <span th:errors="*{reportDate}" class="err"></span>
         <br>
 
-    <label for="name">氏名</label><br>
-    <span sec:authentication="principal.Employee.name"></span><br>
-
+        <label for="name">氏名</label><br>
+        <span th:text="${employee.name}"></span>
+        <br>
     <label for="title">タイトル</label><br>
         <input type="text" th:field="*{title}" th:errorclass="err">
         <span th:errors="*{title}" class="err"></span>
