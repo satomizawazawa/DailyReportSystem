@@ -24,9 +24,15 @@ public class ReportService {
         return reportRepository.findAll();
     }
 
+    public List<Report> getMyList(Employee employee){
+        return reportRepository.findByEmployee(employee);
+    }
+
     public Report getReport(Integer id) {
         return reportRepository.findById(id).get();
     }
+
+
 
     /** 日報の登録を行なう */
     @Transactional

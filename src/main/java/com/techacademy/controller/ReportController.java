@@ -34,6 +34,7 @@ public class ReportController {
         // report/list.htmlに画面遷移
         return "report/list";
     }
+
     /** 日報登録画面を表示*/
     @GetMapping("/register")
     public String getRegister(@ModelAttribute Report report,@AuthenticationPrincipal UserDetail userDetail, Model model) {
