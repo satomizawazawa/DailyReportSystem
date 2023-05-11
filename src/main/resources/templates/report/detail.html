@@ -18,8 +18,8 @@
 <tr><th>更新日時</th><td th:text="${#temporals.format(report.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td></tr>
 </table>
 
-
-<a th:href="@{/report/update/{id}/(id=${report.id})}">日報を編集する</a><br>
+<div th:if="${report.employee.name} eq ${#authentication.principal.employee.name}">
+<a th:href="@{/report/update/{id}/(id=${report.id})}">日報を編集する</a><br></th:if></div>
 <a th:href="@{/report/list}">一覧に戻る</a>
 
 
