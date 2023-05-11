@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>日報詳細</title>
+    <link rel="stylesheet" th:href="@{/css/detail.css}">
+</head>
+<body>
+<h1>日報管理システム</h1>
+<h2>日報詳細ページ</h2>
+
+<table th:object="${report}" class="report">
+<tr><th>氏名</th><td th:text="${report.employee.name}"></td></tr>
+<tr><th>日付</th><td th:text="*{reportDate}"></td></tr>
+<tr><th>タイトル</th><td th:text="*{title}"></td></tr>
+<tr><th>内容</th><td><pre th:text="*{content}"></pre></td></tr>
+<tr><th>登録日時</th><td th:text="${#temporals.format(report.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td></tr>
+<tr><th>更新日時</th><td th:text="${#temporals.format(report.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td></tr>
+</table>
+
+
+<a th:href="@{/report/update/{id}/(id=${report.id})}">日報を編集する</a><br>
+<a th:href="@{/report/list}">一覧に戻る</a>
+
+
+</body>
+</html>

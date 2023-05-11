@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -56,6 +57,40 @@ public class ReportController {
         // 一覧画面にリダイレクト
         return "redirect:/report/list";
     }
+
+    /**日報詳細画面の表示*/
+    @GetMapping("/detail/{id}/")
+    public String getReport(@PathVariable("id") Integer id, Model model) {
+        // Modelに登録
+        model.addAttribute("report", service.getReport(id));
+        // 従業員更新画面に遷移
+        return "report/detail";
+    }
+
+    /** 従業員更新画面を表示 */
+    @GetMapping("/update/{id}/")
+    public String updateReport(@PathVariable("id") Integer id, @ModelAttribute Report report,@AuthenticationPrincipal UserDetail userDetail,Model model) {
+        // Modelに登録
+        model.addAttribute("report", service.getReport(id));
+        // 従業員更新画面に遷移
+        return "report/update";
+    }
+
+    /** 従業員情報更新処理 */
+    @PostMapping("/update/{id}/")
+    public String postReport(@PathVariable("id") Integer id, @Validated Report report, BindingResult res, @AuthenticationPrincipal UserDetail userDetail, Model model) {
+        if(res.hasErrors()) {
+            // エラーあり
+            return getReport(null,model);
+        }
+        //更新画面にない情報をセット
+        report.setUpdatedAt(LocalDateTime.now());
+        // 従業員の更新
+        service.updateReport(report);
+        // 一覧画面にリダイレクト
+        return "redirect:/report/list";
+    }
+
 
 
 }

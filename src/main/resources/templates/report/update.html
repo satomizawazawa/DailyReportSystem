@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>日報管理システム - 日報情報の編集</title>
+</head>
+
+<body>
+    <h1>日報管理システム</h1>
+    <h2>日報編集ページ</h2>
+
+    <form method="post" th:action="@{/report/update/{id}/(id=${report.id})}" th:object="${report}">
+    <input type="hidden" id="id" name="id" th:field="*{id}">
+
+
+    <label for="reportDate">日付</label><br>
+    <input type="date" th:field="*{reportDate}">
+    <br>
+
+    <label for="name">氏名</label><br>
+    <span th:text="${#authentication.principal.employee.name}"></span>
+    <br>
+
+    <label for="title">タイトル</label><br>
+    <input type="text" th:field="*{title}">
+    <br>
+
+    <label for="content">内容</label><br>
+    <textarea th:field="*{content}"></textarea>
+    <br>
+
+    <input type="submit" value="投稿"><br>
+
+    <a th:href="@{/report/list}">一覧に戻る</a>
+
+    </form>
+
+</body>
+</html>

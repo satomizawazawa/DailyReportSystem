@@ -23,6 +23,11 @@ public class ReportService {
         // リポジトリのfindAllメソッドを呼び出す
         return reportRepository.findAll();
     }
+
+    public Report getReport(Integer id) {
+        return reportRepository.findById(id).get();
+    }
+
     /** 日報の登録を行なう */
     @Transactional
     public Report saveReport(Report report,UserDetail userDetail) {
@@ -31,5 +36,14 @@ public class ReportService {
         employee.setReports(getReportList());
         return reportRepository.save(report);
     }
+
+    /**日報の更新を行う*/
+    @Transactional
+    public Report updateReport(Report report) {
+        Report oldReport = this.getReport(report.getId());
+        report.setEmployee(oldReport.getEmployee());
+        return reportRepository.save(report);
+    }
+
 
 }
