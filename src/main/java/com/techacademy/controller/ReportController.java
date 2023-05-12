@@ -51,8 +51,8 @@ public class ReportController {
             return getRegister(report, userDetail, model);
         }
         // 登録画面にない項目をセット
-        report.setCreatedAt(LocalDateTime.now());
-        report.setUpdatedAt(LocalDateTime.now());
+        //report.setCreatedAt(LocalDateTime.now());
+        //report.setUpdatedAt(LocalDateTime.now());
         //日報登録
         service.saveReport(report, userDetail);
         // 一覧画面にリダイレクト
@@ -86,6 +86,8 @@ public class ReportController {
         }
         //更新画面にない情報をセット
         report.setUpdatedAt(LocalDateTime.now());
+ //       LocalDateTime createdate =report.getCreatedAt();
+   //     report.setCreatedAt(createdate);
         // 従業員の更新
         service.updateReport(report);
         // 一覧画面にリダイレクト
